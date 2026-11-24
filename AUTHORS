@@ -1,0 +1,18 @@
+Grid Console — Bluetooth control for Casio G-Shock watches
+https://github.com/kuydigital/grid-console
+
+Original author and copyright holder:
+
+  KUYDIGITAL (kuydigital)
+
+Copyright (c) 2026 KUYDIGITAL. All original work in this repository is
+authored by KUYDIGITAL and licensed under the MIT License (see LICENSE).
+
+Protocol facts (feature codes, byte layouts, GATT UUIDs) for Casio watches
+were derived from the open-source Gadgetbridge project and dakk's
+casio-gshock-bt-proto documentation. Only the protocol facts were used; the
+code here is an independent reimplementation. This project is not affiliated
+with or endorsed by Casio. "G-SHOCK" is a trademark of Casio.
+
+Contributors (name — contribution / model profile):
+  (none yet — PRs welcome; add yourself and your watch profile here)

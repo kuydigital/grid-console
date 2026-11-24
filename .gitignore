@@ -1,0 +1,9 @@
+# Captures contain personal BLE data — never commit
+*.pklg
+*.pcapng
+btsnoop*.log
+gridconsole-*.json
+
+# OS / editor
+.DS_Store
+*.swp
