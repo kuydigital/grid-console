@@ -1,8 +1,9 @@
 // Profile registry. Import each model profile and add it to PROFILES.
 // Contributors: add `import xyz from "./xyz.js";` and push it to the array.
 import gbd200 from "./gbd200.js";
+import abl100we from "./abl100we.js";
 
-export const PROFILES = [gbd200];
+export const PROFILES = [gbd200, abl100we];
 
 // Known Casio service UUIDs to request access to (optionalServices for Web Bluetooth).
 // A watch that advertises one of these but has no matching profile still connects

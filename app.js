@@ -91,12 +91,17 @@ async function connect() {
 }
 function disconnect() { try { ble.device && ble.device.gatt.connected && ble.device.gatt.disconnect(); } catch (e) {} setMode("offline"); }
 
+// BluetoothCharacteristicProperties is getter-only and JSON-stringifies to {},
+// so extract the flags as a plain array for the Diagnostic export.
+const PROP_KEYS = ["broadcast", "read", "writeWithoutResponse", "write", "notify", "indicate", "authenticatedSignedWrites", "reliableWrite", "writableAuxiliaries"];
+function propFlags(p) { return p ? PROP_KEYS.filter((k) => p[k]) : []; }
+
 async function discover() {
   state.gatt = [];
   const svcs = await ble.server.getPrimaryServices();
   for (const s of svcs) {
     const chars = await s.getCharacteristics();
-    state.gatt.push({ service: s.uuid, chars: chars.map((c) => ({ uuid: c.uuid, props: c.properties })) });
+    state.gatt.push({ service: s.uuid, chars: chars.map((c) => ({ uuid: c.uuid, props: propFlags(c.properties) })) });
   }
 }
 
@@ -470,7 +475,7 @@ const MODULES = {
       const report = { generatedAt: null, device: null, gatt: [], probe: [] };
       root.querySelector("#d_dump").onclick = () => {
         report.device = ctx.state.name; report.gatt = ctx.state.gatt;
-        out.textContent = ctx.state.gatt.map((s) => s.service + "\n" + s.chars.map((c) => "  " + c.uuid + "  [" + Object.keys(c.props).filter((k) => c.props[k]).join(",") + "]").join("\n")).join("\n\n") || "(no services)";
+        out.textContent = ctx.state.gatt.map((s) => s.service + "\n" + s.chars.map((c) => "  " + c.uuid + "  [" + (Array.isArray(c.props) ? c.props : Object.keys(c.props).filter((k) => c.props[k])).join(",") + "]").join("\n")).join("\n\n") || "(no services)";
         ctx.log("GATT dumped (" + ctx.state.gatt.length + " services).", "g");
       };
       root.querySelector("#d_probe").onclick = async () => {
