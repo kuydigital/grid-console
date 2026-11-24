@@ -98,11 +98,17 @@
     border: 1px solid var(--edge); border-radius: 4px; padding: 7px 8px; }
   input[type="number"] { width: 54px; text-align: center; }
   .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-  label.fld { font-family: "Share Tech Mono", monospace; font-size: 11px; color: var(--lcd-mid); text-transform: uppercase; letter-spacing: 0.14em; }
+  label.fld, label.k { font-family: "Share Tech Mono", monospace; font-size: 11px; color: var(--blue); text-transform: uppercase; letter-spacing: 0.14em; }
+  button.warn { color: var(--amber); border-color: rgba(242,169,59,0.5); }
+  button.warn:hover:not(:disabled) { color: #ffd892; border-color: var(--amber); }
+  .tlist { display: flex; flex-direction: column; gap: 8px; }
+  .trow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 12px; border: 1px solid var(--edge); border-radius: 6px; background: var(--lcd-bg); }
+  .trow .idx { font-family: "Share Tech Mono", monospace; color: var(--lcd-mid); font-size: 12px; }
+  .trow input[type="text"] { flex: 1 1 120px; min-width: 100px; }
 
   .log { font-family: "Share Tech Mono", monospace; font-size: 12px; background: var(--lcd-bg); border: 1px solid #05211a;
     border-radius: 6px; padding: 10px 12px; max-height: 220px; overflow-y: auto; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
-  .log .g { color: var(--green); } .log .e { color: var(--red); } .log .m { color: var(--lcd-mid); }
+  .log .g { color: var(--green); } .log .e { color: var(--red); } .log .m { color: var(--lcd-mid); } .log .o { color: var(--amber); }
 
   .note { font-family: "Share Tech Mono", monospace; font-size: 12px; color: var(--muted); line-height: 1.7; }
   .note code { color: var(--lcd-on); }

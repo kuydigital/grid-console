@@ -29,8 +29,10 @@ profiles/
 
 **Adding a watch = adding a `profiles/<model>.js` file.** No engine changes. A profile declares
 the Casio service/characteristics, which feature modules to show, and the per‑model byte layouts
-those modules read. Shared modules (Time, Alarms, Settings, Status, Diagnostic) work across the
-whole 2C/"All Features" family; a model only lists the ones it supports.
+those modules read. Shared modules — Time, Alarms, Timers, World Time, Signal (notifications),
+Finder, Activity, Profile, Status, Settings and Diagnostic — work across the whole 2C/"All Features"
+family; a model only lists the ones it supports (and the optional channels, like the notification
+and convoy characteristics, that Signal/Finder/Activity need).
 
 ## How we add watches without owning them
 
@@ -45,11 +47,12 @@ whole 2C/"All Features" family; a model only lists the ones it supports.
 
 | Model | State |
 |-------|-------|
-| **GBD‑200** | ✅ verified on hardware (Time, Alarms, Settings, Status) |
+| **GBD‑200** | ✅ full feature set (Time, Alarms, Timers, World Time, Signal, Finder, Activity, Profile, Status, Settings) |
 | GBX‑100, GBD‑100, GG‑B100, … | ⏳ planned — same 2C family, need a capture to confirm |
 
-More feature modules (World Time, Timers, Signal, Finder, Activity, Profile) port from
-[gbd200‑grid](https://github.com/kuydigital/gbd200-grid) over the same pattern.
+The full GBD‑200 feature set from [gbd200‑grid](https://github.com/kuydigital/gbd200-grid) now runs
+through Grid Console's shared modules; new models light up these same tabs by declaring the matching
+feature codes in their profile.
 
 ## Use it
 
