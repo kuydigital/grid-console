@@ -473,6 +473,7 @@ const MODULES = {
     mount(root, ctx) {
       const out = root.querySelector("#d_out");
       const report = { generatedAt: null, device: null, gatt: [], probe: [] };
+      let armed = false;   // two-click guard: a GATT-only capture can't build a profile
       root.querySelector("#d_dump").onclick = () => {
         report.device = ctx.state.name; report.gatt = ctx.state.gatt;
         out.textContent = ctx.state.gatt.map((s) => s.service + "\n" + s.chars.map((c) => "  " + c.uuid + "  [" + (Array.isArray(c.props) ? c.props : Object.keys(c.props).filter((k) => c.props[k])).join(",") + "]").join("\n")).join("\n\n") || "(no services)";
@@ -487,14 +488,23 @@ const MODULES = {
         }
         out.textContent = report.probe.length ? report.probe.map((p) => p.code + " → " + p.bytes).join("\n") : "No feature codes responded.";
         ctx.log("Feature probe done (" + report.probe.length + " responded).", "g");
+        armed = false; root.querySelector("#d_export").textContent = "Export Report (JSON)";
       };
       root.querySelector("#d_export").onclick = () => {
+        const btn = root.querySelector("#d_export");
+        if (!report.probe.length && !armed) {   // nudge: hold a probe-less capture, don't block it
+          armed = true; btn.textContent = "Export Anyway";
+          out.textContent = "Heads up: this capture has no feature-probe data. A profile can't be built from a GATT dump alone — connect (Live Link) and click \"Probe Features\" first, then export. Click \"Export Anyway\" to download the GATT-only report regardless.";
+          ctx.log("Export held: no probe data. Run Probe Features for a profile-ready capture, or click Export Anyway.", "o");
+          return;
+        }
         report.generatedAt = new Date().toISOString(); report.device = ctx.state.name; if (!report.gatt.length) report.gatt = ctx.state.gatt;
         const blob = new Blob([JSON.stringify(report, null, 2)], { type: "application/json" });
         const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
         a.download = "gridconsole-" + (ctx.state.name || "watch").replace(/[^A-Za-z0-9]+/g, "_") + ".json";
         a.click(); URL.revokeObjectURL(a.href);
-        ctx.log("Report exported — attach it to a GitHub issue to request support. (Review it first; it names your watch.)", "g");
+        armed = false; btn.textContent = "Export Report (JSON)";
+        ctx.log((report.probe.length ? "Report exported" : "GATT-only report exported") + " — attach it to a GitHub issue to request support. (Review it first; it names your watch.)", "g");
       };
     },
   },

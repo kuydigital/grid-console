@@ -68,7 +68,9 @@ locally `python3 -m http.server` then open `http://localhost:8000`.
 
 ## Contributing a model
 
-Open an issue with your **Diagnostic export**, or send a PR adding `profiles/<model>.js`. Keep every
+Open an issue with your **Diagnostic export** — connect (Live Link) and run **Probe Features** before
+exporting, so the capture includes the watch's feature codes (a GATT dump alone can't build a profile;
+the app will warn you if the probe is empty). Or send a PR adding `profiles/<model>.js`. Keep every
 write **read‑modify‑write and read‑back‑verified**, and mark an unverified model `verified: false`
 (it shows a ⚠️ badge). Add yourself to `AUTHORS`.
 
